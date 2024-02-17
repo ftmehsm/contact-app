@@ -1,0 +1,23 @@
+h1 {
+  margin: 10px;
+  color: rgb(138, 43, 226);
+}
+p {
+  margin-top: 20px;
+  color: gray;
+}
+a {
+  text-decoration: none;
+  color: rgb(138, 43, 226);
+  background-color: rgba(216, 187, 242, 0.382);
+  padding: 3px 5px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+a:hover {
+  color: #ffffff;
+  background-color: rgba(137, 43, 226, 0.762);
+}
