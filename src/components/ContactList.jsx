@@ -1,13 +1,10 @@
-function ContactList({ contacts }) {
+function ContactList({ id , name, lastName, phone, deleteHandler }) {
   return (
     <div>
-      {contacts.map((contact) => (
-        <p key={contact.id}>
-          name : {contact.name}
-          lastName : {contact.lastName}
-          phone : {contact.phone}
-        </p>
-      ))}
+      <span>{name} </span>
+      <span>{lastName} </span>
+      <span>{phone}</span>
+      <button onClick={() => deleteHandler(id)}>Delete</button>
     </div>
   );
 }

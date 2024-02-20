@@ -19,14 +19,18 @@ function Contact() {
 
     setContact((contact) => ({ ...contact, [name]: value }));
   };
-  const addHandler =  () => {
+
+  const addHandler = () => {
+    let newContact, localStorageData, newLocalStorageData;
     if (!contact.name || !contact.lastName || !contact.phone) {
       setError((error) => !error);
     } else {
       setError(false);
-      const newContact = { ...contact, id: v4() };
+      newContact = { ...contact, id: v4() };
+      localStorageData = JSON.parse(localStorage.getItem("contacts"));
+      newLocalStorageData = [...localStorageData, newContact];
+      localStorage.setItem("contacts", JSON.stringify(newLocalStorageData));
       setContacts((contacts) => [...contacts, newContact]);
-      localStorage.setItem("contacts", JSON.stringify(contacts));
       setContact({
         id: "",
         name: "",
@@ -35,9 +39,19 @@ function Contact() {
       });
     }
   };
+const deleteHandler = (id) => {
+  const newContacts = contacts.filter(contact => contact.id !== id)
+  setContacts(newContacts)
+  localStorage.setItem("contacts" , JSON.stringify(newContacts))
+}
   useEffect(() => {
-    setContacts(JSON.parse(localStorage.getItem("contacts")));
+    if (localStorage.getItem("contacts")) {
+      setContacts(JSON.parse(localStorage.getItem("contacts")));
+    } else {
+      localStorage.setItem("contacts", JSON.stringify(contacts));
+    }
   }, []);
+
   return (
     <div>
       {inputs.map((input) => (
@@ -52,7 +66,18 @@ function Contact() {
       ))}
       <button onClick={addHandler}>Add Contact</button>
       {error && <p>new error</p>}
-      <ContactList contacts={contacts} />
+
+      {contacts.map((contact) => (
+        <ContactList
+        id={contact.id}
+          key={contact.id}
+          name={contact.name}
+          lastName={contact.lastName}
+          phone={contact.phone}
+          deleteHandler={deleteHandler}
+        />
+      ))}
+
     </div>
   );
 }
